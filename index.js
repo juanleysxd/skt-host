@@ -1,33 +1,32 @@
 const HaxballJS = require("haxball.js");
 
-async function startRoom() {
-  const HB = await HaxballJS;
-  const HBInit = HB.default || HB; // Esto arregla el error de "not a function"
-  
-  const room = HBInit({
-    roomName: "SkT vs ??? x3 x4",
-    maxPlayers: 12,
-    noPlayer: true, 
-    public: true,
-    token: process.env.TOKEN,
-    geo: { "code": "AR", "lat": -34.6, "lon": -58.4 } 
-  });
+async function abrirSala() {
+    const HB = await HaxballJS;
+    // Forzamos la carga de la función inicializadora
+    const HBInit = (typeof HB === 'function') ? HB : HB.default;
 
-  const ADMIN_PASSWORD = "!adminjk123";
+    const room = HBInit({
+        roomName: "SkT vs ??? x3 x4",
+        maxPlayers: 12,
+        public: true,
+        noPlayer: true,
+        token: process.env.TOKEN,
+        geo: { "code": "AR", "lat": -34.6, "lon": -58.4 }
+    });
 
-  room.onRoomLink = (link) => console.log("SALA ABIERTA EN: " + link);
+    room.onRoomLink = (link) => console.log("SALA ABIERTA EN: " + link);
+    
+    room.onPlayerJoin = (player) => {
+        room.sendAnnouncement("¡Bienvenido a SkT! Admin: !adminjk123", player.id, 0xFFFF00);
+    };
 
-  room.onPlayerJoin = (player) => {
-    room.sendAnnouncement("¡Bienvenido a SkT! Clave admin: !adminjk123", player.id, 0xFFFF00, "bold");
-  };
-
-  room.onPlayerChat = (player, message) => {
-    if (message.trim() === ADMIN_PASSWORD) {
-      room.setPlayerAdmin(player.id, true);
-      room.sendAnnouncement("¡Sos admin!", player.id, 0x00FF00);
-      return false;
-    }
-  };
+    room.onPlayerChat = (player, message) => {
+        if (message.trim() === "!adminjk123") {
+            room.setPlayerAdmin(player.id, true);
+            room.sendAnnouncement("¡Ya sos admin!", player.id, 0x00FF00);
+            return false;
+        }
+    };
 }
 
-startRoom().catch(console.error);
+abrirSala().catch(err => console.error("Error al abrir:", err));
