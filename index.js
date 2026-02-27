@@ -1,6 +1,10 @@
 const HaxballJS = require("haxball.js");
 
-HaxballJS.default.then((HBInit) => {
+async function start() {
+    // Esto detecta automáticamente si debe usar .default o no
+    const HB = await HaxballJS;
+    const HBInit = HB.default || HB;
+
     const room = HBInit({
         roomName: "SkT vs ??? x3 x4",
         maxPlayers: 12,
@@ -23,6 +27,6 @@ HaxballJS.default.then((HBInit) => {
             return false;
         }
     };
-}).catch(err => {
-    console.error("Error al iniciar:", err);
-});
+}
+
+start().catch(console.error);
