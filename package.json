@@ -1,0 +1,11 @@
+{
+  "name": "haxball-skt-host",
+  "version": "1.0.0",
+  "main": "index.js",
+  "dependencies": {
+    "haxball.js": "latest"
+  },
+  "scripts": {
+    "start": "node index.js"
+  }
+}
