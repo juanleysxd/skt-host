@@ -1,8 +1,8 @@
 const HaxballJS = require("haxball.js");
 
 async function startRoom() {
-  // La librería entrega la función directamente en el objeto cargado
-  const HBInit = await HaxballJS;
+  const HB = await HaxballJS;
+  const HBInit = HB.default || HB; // Esto arregla el error de "not a function"
   
   const room = HBInit({
     roomName: "SkT vs ??? x3 x4",
