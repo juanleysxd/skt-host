@@ -1,10 +1,10 @@
 const HaxballJS = require("haxball.js");
 
 async function startRoom() {
-  // ACA ESTABA EL ERROR: Ahora se usa .default si es con require
+  // La librería entrega la función directamente en el objeto cargado
   const HBInit = await HaxballJS;
   
-  const room = HBInit.default({ // Agregamos .default acá
+  const room = HBInit({
     roomName: "SkT vs ??? x3 x4",
     maxPlayers: 12,
     noPlayer: true, 
@@ -30,4 +30,4 @@ async function startRoom() {
   };
 }
 
-startRoom();
+startRoom().catch(console.error);
